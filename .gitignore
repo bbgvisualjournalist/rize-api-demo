@@ -29,3 +29,10 @@ public/images/*.png
 
 # Ignore Webstorm folder
 /.idea/
+
+# SASS
+.sass-cache
+*.css.map
+
+compiled
+.style-human.css
