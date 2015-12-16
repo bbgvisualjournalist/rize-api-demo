@@ -7,7 +7,7 @@ config.spreadsheet = 'https://docs.google.com/spreadsheets/d/1KTpCMF4_5TBEIyM-g2
 config.sections = ['site', 'profiles'];
 
 //Change for local v. production
-/*config.port = process.env.PORT || '8080';*/
+config.port = process.env.PORT || '8080';
 
 //api url
 config.api = 'http://my-api.org/api/';
