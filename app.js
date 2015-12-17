@@ -44,27 +44,22 @@ function readJSONFile( path ){
 
 
 // Grab the JSON from the rize api and write the file 
-// Could probably simplify this workflow because there aren't live updates. 
-// Just pass the data into a variable into the Route 
 var request = require('request');
 
-if (!config.offlineMode){
-	request(config.api, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var importedJSON = JSON.parse(body);
+request(config.api, function (error, response, body) {
+	if (!error && response.statusCode == 200) {
+		var importedJSON = JSON.parse(body);
 
-			var filename = '../data/api.json';
+		var filename = '../data/api.json';
 
-			jf.writeFile(filename, importedJSON, function(err) {
-				global.api_data = importedJSON;
-			})
-		}
-	})
-} else {
-	console.log('offline == true')
-	var filename = '../data/api.json';
-	global.api_data = readJSONFile(filename);
-}
+		jf.writeFile(filename, importedJSON, function(err) {
+			global.api_data = importedJSON;
+		})
+	} else {
+		//if you can't connect to the API, use the archive copy of api.json
+		global.api_data = readJSONFile('../data/api.json');
+	}
+})
 
 
 
