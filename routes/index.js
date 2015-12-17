@@ -16,7 +16,7 @@ function splitParagraphs(source){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	var featuredNumber = 0;
+	var featuredNumber = 2;//default page
 
 	var currentNumber = featuredNumber;
 	var description = "<p>No description set. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt sint mollitia animi labore, tenetur ipsam veniam necessitatibus, est quisquam harum quasi unde architecto blanditiis alias dolor accusamus quod aliquid aliquam?</p><p>Maxime facilis debitis dignissimos quam quia voluptatibus? Voluptatum iure adipisci accusantium ea ullam nemo, alias modi architecto, eveniet dolore fugiat! Iusto aliquid quidem, eius delectus non mollitia facere vitae qui?</p>";
