@@ -16,6 +16,7 @@ var jf = require('jsonfile');
 var Tabletop = require('tabletop');
 var spreadsheet_URL = config.spreadsheet;
 
+var request = require('request');
 
 
 
@@ -43,23 +44,6 @@ function readJSONFile( path ){
 
 
 
-// Grab the JSON from the rize api and write the file 
-var request = require('request');
-
-request(config.api, function (error, response, body) {
-	if (!error && response.statusCode == 200) {
-		var importedJSON = JSON.parse(body);
-
-		var filename = '../data/api.json';
-
-		jf.writeFile(filename, importedJSON, function(err) {
-			global.api_data = importedJSON;
-		})
-	} else {
-		//if you can't connect to the API, use the archive copy of api.json
-		global.api_data = readJSONFile('../data/api.json');
-	}
-})
 
 
 
@@ -69,19 +53,23 @@ request(config.api, function (error, response, body) {
 var sections = config.sections;
 
 
+	//Load data from saved JSON files into global variables.
+	//EXAMPLE: global.overview.sitewide = readJSONFile('../data/sitewide.json');
 for (var i = 0; i<sections.length; i++){
 	//Use namespaced global variable to keep data that will update. 
 	//EXAMPLE: global.freegate = {};
 	global[sections[i]] = {};
 
-	//Load data from saved JSON files into global variables.
-	//EXAMPLE: global.overview.sitewide = readJSONFile('../data/sitewide.json');
 	var filename = '../data/' + sections[i] + '.json'
 	global[sections[i]] = readJSONFile(filename);
 
 	app.locals[sections[i]] = {};
 	app.locals[sections[i]] = readJSONFile(filename);
 }
+// Load API data from api.json if possible
+global.api_data = {};
+global.api_data = readJSONFile('../data/api.json');
+
 
 
 //Toggle for offline use; ignores Google spreadsheet request. Useful for local dev.
@@ -131,6 +119,30 @@ function fetchData(){
 	};
 
 	Tabletop.init(options);
+	//Add code here for loading api data.
+
+	// Grab the JSON from the rize api and write the file 
+	// This happens once when the application first starts.
+	// This should probably be set up the same way as Google Spreadsheet.
+
+	request(config.api, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var importedJSON = JSON.parse(body);
+
+			var filename = '../data/api.json';
+
+			jf.writeFile(filename, importedJSON, function(err) {
+				global.api_data = importedJSON;
+			})
+		}/* else {
+			//if you can't connect to the API, use the archive copy of api.json
+			global.api_data = readJSONFile('../data/api.json');
+		}
+		*/
+	})
+
+
+
 }
 
 
