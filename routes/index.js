@@ -16,24 +16,10 @@ function splitParagraphs(source){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	var featuredNumber = 2;//default page
-
-	var currentNumber = featuredNumber;
-	var description = "<p>No description set. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt sint mollitia animi labore, tenetur ipsam veniam necessitatibus, est quisquam harum quasi unde architecto blanditiis alias dolor accusamus quod aliquid aliquam?</p><p>Maxime facilis debitis dignissimos quam quia voluptatibus? Voluptatum iure adipisci accusantium ea ullam nemo, alias modi architecto, eveniet dolore fugiat! Iusto aliquid quidem, eius delectus non mollitia facere vitae qui?</p>";
-	var summarySet = global.api_data.accounts[currentNumber].rize_summary;
-
-	if (!summarySet){
-		summarySet = global.api_data.accounts[currentNumber].linkedin.summary;
-	}
-	if (summarySet){
-		description = splitParagraphs(summarySet);
-	}
 
 
 	res.render('index', {
-		title: 'Rize API profile test',
-		description: description,
-		currentNumber: currentNumber
+		title: 'Rize API profile test'
 	});
 });
 
@@ -58,7 +44,7 @@ router.get('/:number', function(req, res, next) {
 	}
 
 
-	res.render('index', {
+	res.render('profile', {
 		title: 'Rize API profile test',
 		description: description,
 		currentNumber: currentNumber
