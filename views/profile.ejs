@@ -5,58 +5,55 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title><%= title %></title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
-
-	<style>
-
-	</style>
-
 </head>
 <body>
 
-<div id="container">
-	<h1><a href="/">Rize API demo</a></h1>
-	<div>
-		<h2 class="rize-profile-category"><%= global.api_data.accounts[currentNumber].categories %></h2>
-		<h2 class="rize-profile-location"><%= global.api_data.accounts[currentNumber].city_name %>, <%= global.api_data.accounts[currentNumber].country_name %></h2>
-		<div class="clearAll"></div>
-	</div>
-	<div class="rize-profile-banner" style="background-image: url(<%= global.profiles[currentNumber].image %>)">
-		<div class="rize-profile-banner-text">
-			<h1 class="rize-profile-name"><%= global.api_data.accounts[currentNumber].display_name %></h1>
-			<h3 class="rize-profile-position"><%= global.api_data.accounts[currentNumber].linkedin.job_title %>, <%= global.api_data.accounts[currentNumber].linkedin.organization %></h3>
-		</div>
-	</div>
-	<div class="rize-profile-description">
-		<%- description %>
+<div id="main" class="main-content" role="main">
+	<header>
+		<h1><a href="/">Rize API demo</a></h1>
+	</header>
 
-		<% if ( global.api_data.accounts[currentNumber].rize_links[0].url ){ %>
-		<div class='rize-profile-description-related'>
+	<article class="rize-profile">
+
+		<div>
+			<h2 class="rize-profile-category"><%= categories %></h2>
+			<h2 class="rize-profile-location"><%= location %></h2>
+			<div class="clearAll"></div>
+		</div>
+		<div class="rize-profile-banner" style="background-image: url(<%= global.profiles[currentNumber].image %>)">
+			<div class="rize-profile-banner-text">
+				<h1 class="rize-profile-name"><%= display_name %></h1>
+				<h3 class="rize-profile-position"><%= job_title %></h3>
+			</div>
+		</div>
+
+		<div class="rize-profile-description">
+			<%- description %>
+
+			<% if ( related_links ){ %>
+			<div class='rize-profile-description-related'>
+				<ul>
+					<% for (i = 0; i <global.api_data.accounts[currentNumber].rize_links.length; i++){ %>
+						<li><a href="<%= global.api_data.accounts[currentNumber].rize_links[i].url %>" class="rize-profile-description-related-links"><%= global.api_data.accounts[currentNumber].rize_links[i].title %></a></li>
+					<% } %>
+				</ul>
+			</div>
+			<% } %>
+		</div>
+		<div class="rize-profile-social">
 			<ul>
-				<% for (i = 0; i <global.api_data.accounts[currentNumber].rize_links.length; i++){ %>
-				<li><a href="<%= global.api_data.accounts[currentNumber].rize_links[i].url %>" class="rize-profile-description-related-links"><%= global.api_data.accounts[currentNumber].rize_links[i].title %></a></li>
-				<% } %>
+			<%- linkedin %>
+			<%- twitter %>
+			<%- facebook %>
 			</ul>
 		</div>
-		<% } %>
-	</div>
-	<div class="rize-profile-social">
-		<ul>
-			<li class="rize-profile-social-link">
-				<a href="<%= global.api_data.accounts[currentNumber].linkedin.url %>"></a>
-			</li>
-			<li class="rize-profile-social-link">
-				<a href="https://twitter.com/<%= global.api_data.accounts[currentNumber].twitter.screen_name %>"></a>
-			</li>
-			<li class="rize-profile-social-link"><a href="<%= global.api_data.accounts[currentNumber].facebook.url %>"></a></li>
-		</ul>
-	</div>
-	<div class="rize-profile-quotation">
-		<h3 class="rize-profile-quotation-text">“<%= global.profiles[currentNumber].quotation %>”</h3>
-		<p class="rize-profile-quotation-name"><a href="https://twitter.com/<%= global.api_data.accounts[currentNumber].twitter.screen_name %>"><img src="<%= global.api_data.accounts[currentNumber].twitter.profile_image_url_https %>" class="rize-profile-twitter-mugshot"/>"<%= global.api_data.accounts[currentNumber].twitter.screen_name %></a><span class="rize-profile-quotation-date"><%= global.profiles[currentNumber].quotationdate %></span></p>
-	</div>
-</div>
+		<aside class="rize-profile-quotation">
+			<h3 class="rize-profile-quotation-text">“<%= global.profiles[currentNumber].quotation %>”</h3>
+			<p class="rize-profile-quotation-name"><a href="<%= twitter_link %>"><img src="<%= twitter_profile_image %>" class="rize-profile-twitter-mugshot"/>"<%= twitter_name %></a><span class="rize-profile-quotation-date"><%= global.profiles[currentNumber].quotationdate %></span></p>
+		</aside>
+	</article>
+</div><!-- #main -->
 <div class='clearAll'></div>
-
 
 </body>
 </html>

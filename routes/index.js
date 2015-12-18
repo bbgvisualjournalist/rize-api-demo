@@ -16,8 +16,6 @@ function splitParagraphs(source){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-
 	res.render('index', {
 		title: 'Rize API profile test'
 	});
@@ -25,7 +23,7 @@ router.get('/', function(req, res, next) {
 
 
 
-/* GET home page. */
+/* GET profile page. */
 router.get('/:number', function(req, res, next) {
 	var featuredNumber = 2;
 	if (req.params.number){
@@ -44,8 +42,51 @@ router.get('/:number', function(req, res, next) {
 	}
 
 
+	var categories = global.api_data.accounts[currentNumber].categories;
+	var location = global.api_data.accounts[currentNumber].city_name + ", " + global.api_data.accounts[currentNumber].country_name;
+	var display_name = global.api_data.accounts[currentNumber].display_name;
+	var job_title = global.api_data.accounts[currentNumber].linkedin.job_title + ", " + global.api_data.accounts[currentNumber].linkedin.organization;
+	var related_links = false;
+
+	if ( global.api_data.accounts[currentNumber].rize_links[0].url ){
+		related_links = true;
+	}
+
+	//Social links
+	var linkedin,
+		twitter,
+		facebook,
+		twitter_name,
+		twitter_profile_image;
+
+	if (global.api_data.accounts[currentNumber].linkedin.url){
+		linkedin = '<li class="rize-profile-social-link"><a href="' + global.api_data.accounts[currentNumber].linkedin.url + '"></a></li>';
+	}
+	if (global.api_data.accounts[currentNumber].twitter.screen_name){
+		twitter_link = 'https://twitter.com/' + global.api_data.accounts[currentNumber].twitter.screen_name
+		twitter = '<li class="rize-profile-social-link"><a href="https://twitter.com/' + twitter_link +'"></a></li>';
+		twitter_name = global.api_data.accounts[currentNumber].twitter.screen_name,
+		twitter_profile_image = global.api_data.accounts[currentNumber].twitter.profile_image_url_https;
+	}
+	if (global.api_data.accounts[currentNumber].facebook.url){
+		facebook = '<li class="rize-profile-social-link"><a href="' + global.api_data.accounts[currentNumber].facebook.url + '"></a></li>';
+	}
+
+
+
 	res.render('profile', {
 		title: 'Rize API profile test',
+		categories: categories,
+		location: location,
+		display_name: display_name,
+		job_title: job_title,
+		related_links: related_links,
+		linkedin: linkedin,
+		twitter: twitter,
+		twitter_link: twitter_link,
+		twitter_name: twitter_name,
+		twitter_profile_image: twitter_profile_image,
+		facebook: facebook,
 		description: description,
 		currentNumber: currentNumber
 	});
