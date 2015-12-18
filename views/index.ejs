@@ -22,7 +22,7 @@
 	<ul>
 	<% for (i=0; i<global.api_data.accounts.length; i++){ %>
 		<li>
-		<a href="/<%= global.api_data.accounts[i].id - 1 %>" class="<% if ( global.api_data.accounts[i].account_type == 'Organization'){ %>org<% } %>">
+		<a href="/profile/<%= global.api_data.accounts[i].id - 1 %>" class="<% if ( global.api_data.accounts[i].account_type == 'Organization'){ %>org<% } %>">
 			<%= global.api_data.accounts[i].display_name %> 
 			<% if ( global.api_data.accounts[i].account_type == "Person" && global.api_data.accounts[i].linkedin ){ %>
 			(<%= global.api_data.accounts[i].linkedin.job_title %>)
